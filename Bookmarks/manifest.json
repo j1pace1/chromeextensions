@@ -1,0 +1,17 @@
+{
+    "name": "Bookmarks Merge Extension",
+    "description": "Extension to merge bookmarks",
+    "version": "1.0",
+    "manifest_version": 3,
+    "background": { "service_worker": "background.js" },
+    "permissions": [
+        "scripting",
+        "storage",
+        "bookmarks"
+    ],
+    "action": {
+        "default_popup": "hello.html",
+        "default_icon": "hello_extensions.png"
+    }
+}
+
