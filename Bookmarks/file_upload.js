@@ -1,30 +1,13 @@
-// Get the HTML elements
-const fileInput = document.getElementById('merge-file');
-const output = document.getElementById('output');
-
-// Add an event listener for when a file is selected
-fileInput.addEventListener('change', (event) => {
-    // Get the selected file
-    const file = event.target.files[0];
-    if (!file) {
+chrome.fileSystem.chooseEntry({ type: 'openFile' }, function (readOnlyEntry) {
+    if (!readOnlyEntry) {
+        console.log('No file selected.');
         return;
     }
-
-    // Create a new FileReader instance
-    const reader = new FileReader();
-
-    // Define what happens when the file is successfully read
-    reader.onload = (e) => {
-        const fileContent = e.target.result;
-        output.textContent = fileContent;
-    };
-
-    // Define what happens if the reading fails
-    reader.onerror = (e) => {
-        console.error('Error reading file:', e.target.error);
-        output.textContent = 'Error reading file.';
-    };
-
-    // Start reading the file as text
-    reader.readAsText(file);
+    readOnlyEntry.file(function (file) {
+        var reader = new FileReader();
+        reader.onloadend = function (e) {
+            console.log(e.target.result); // File content
+        };
+        reader.readAsText(file);
+    });
 });
